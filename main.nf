@@ -38,11 +38,16 @@ process compare {
 
 
   output:
-  file "comparison_matrix" into comparison_matrix
+  set file("comparison_matrix"), file("comparison_matrix.labels.txt") into comparison_matrix
+  file "comparison_matrix.csv"
 
   script:
   """
-  sourmash compare *.sig --output comparison_matrix
+  sourmash compare \
+    --ksize 31 \
+    --output comparison_matrix \
+	--csv comparison_matrix.csv \
+    *.sig 
   """
 }
 
@@ -51,7 +56,7 @@ process plot {
   publishDir "${params.outdir}", mode: "link"
 
   input:
-  file "comparison" from comparison_matrix
+  set file("comparison"), file("comparison.labels.txt") from comparison_matrix
 
   output:
   file "comparison.dendro.png"
@@ -61,7 +66,7 @@ process plot {
 
   script:
   """
-  sourmash compare *.sig --output comparison_matrix
+  sourmash plot comparison --labels
   """
 }
 

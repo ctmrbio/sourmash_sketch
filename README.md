@@ -12,6 +12,8 @@ directory by specifying `--outdir FOLDERNAME`.
 ```
 nextflow run ctmrbio/sourmash_sketch --reads 'path/to/reads/*_{1,2}.fq.gz' 
 ```
+This will use whatever environment you currently have activated. To run with conda
+add `-profile conda`  to the command line. 
 
 ## How to run on Gandalf
 ```
