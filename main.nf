@@ -1,4 +1,5 @@
 #!/usr/bin/env nextflow
+// vim: expandtab
 
 if ( ! params.reads ) {
     log.error "No reads specified! Provide --reads 'path/to/*_{1,2}.fq.gz' (single quotes)"
@@ -23,9 +24,9 @@ process sketch {
   script:
   """
   sourmash sketch dna \
-  	-p k=21,k=31,k=51,abund \
-	--output "${sample_id}.sig" \
-  	"${reads[0]}"
+     -p k=21,k=31,k=51,abund \
+     --output "${sample_id}.sig" \
+     "${reads[0]}"
   """
 }
 
@@ -46,7 +47,7 @@ process compare {
   sourmash compare \
     --ksize 31 \
     --output comparison_matrix \
-	--csv comparison_matrix.csv \
+    --csv comparison_matrix.csv \
     *.sig 
   """
 }
